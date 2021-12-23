@@ -25,40 +25,14 @@ namespace API_Farmacia.Controllers
 
         }
 
-        [HttpGet("Cache")]
-        public ActionResult<string> GetCache()
-        {
-            var cacheEntry = _cache.GetOrCreate("MeuCacheKey", entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
-                entry.SetPriority(CacheItemPriority.High);
-
-                return OperacaoDeLongaDuracao();
-            });
-            return cacheEntry;
-        }
-
-        private string OperacaoDeLongaDuracao()
-        {
-            Thread.Sleep(5000);
-            return "Operação de longa duração concluída !";
-        }
-
         [HttpGet]
         public ActionResult<List<CategoriaRemedio>> Get()
         {
             CategoriasDAO dao = new CategoriasDAO(_context);
             try
             {
-                var cacheEntry = _cache.GetOrCreate("MeuCacheCategorias", entry =>
-                {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
-                    entry.SetPriority(CacheItemPriority.High);
-
-                    var lista = dao.Index();
-                    return Ok(lista);
-                });
-                return cacheEntry;
+                var lista = dao.Index();
+                return Ok(lista);
             }
             catch (Exception ex) {
 

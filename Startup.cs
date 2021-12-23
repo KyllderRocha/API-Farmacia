@@ -32,8 +32,6 @@ namespace API_Farmacia
         {
             services.AddControllers();
             services.AddMvc()
-                //.AddFluentValidation(FluentValidation => FluentValidation.RegisterValidatorsFromAssemblyContaining<Startup>())
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<Context>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"), 
@@ -45,7 +43,6 @@ namespace API_Farmacia
                             errorNumbersToAdd: null);
                     });
             });
-            services.AddMemoryCache();
 
         }
 

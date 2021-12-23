@@ -31,15 +31,8 @@ namespace API_Farmacia.Controllers
             RemedioDAO dao = new RemedioDAO(_context);
             try
             {
-                var cacheEntry = _cache.GetOrCreate("MeuCacheRemedio", entry =>
-                {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
-                    entry.SetPriority(CacheItemPriority.High);
-
-                    var lista = dao.Index();
-                    return Ok(lista);
-                });
-                return cacheEntry;
+                var lista = dao.Index();
+                return Ok(lista);
             }
             catch (Exception ex) {
 

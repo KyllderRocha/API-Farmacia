@@ -31,15 +31,8 @@ namespace API_Farmacia.Controllers
             UsuarioDAO dao = new UsuarioDAO(_context);
             try
             {
-                var cacheEntry = _cache.GetOrCreate("MeuCacheUsuario", entry =>
-                {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
-                    entry.SetPriority(CacheItemPriority.High);
-
-                    var lista = dao.Index();
-                    return Ok(lista);
-                });
-                return cacheEntry;
+                var lista = dao.Index();
+                return Ok(lista);
             }
             catch (Exception ex) {
 
